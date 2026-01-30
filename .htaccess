@@ -1,0 +1,18 @@
+# Disable directory listing to prevent 403 on folder access
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /trackify/
+
+  # If you hit /trackify, serve index.html
+  RewriteRule ^$ index.html [L]
+  
+  # If the file exists, serve it
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # For everything else, send to index.html (React Router)
+  RewriteRule ^ index.html [L]
+</IfModule>
